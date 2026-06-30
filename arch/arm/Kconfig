@@ -903,6 +903,17 @@ config ARCH_CHIP_HT32F491X3
 	---help---
 		Holtek HT32F491x3 (ARM Cortex-M4) architectures
 
+# Ref: Zephyr PR #91394 - RZ/V2H CR8 uses Cortex-R8 with GICv1 and FPU
+config ARCH_CHIP_RZV2H
+	bool "Renesas RZ/V2H"
+	select ARCH_CORTEXR8
+	select ARCH_HAVE_FPU
+	select ARCH_HAVE_LOWVECTORS
+	select ARCH_HAVE_IRQPRIO
+	select ARMV7R_HAVE_GICv2
+	---help---
+		Renesas RZ/V2H (R9A09G057) family (ARM Cortex-R8)
+
 config ARCH_CHIP_ARM_CUSTOM
 	bool "Custom ARM chip"
 	select ARCH_CHIP_CUSTOM
@@ -1161,6 +1172,16 @@ config ARCH_CORTEXR7
 	select ARCH_HAVE_MPU
 	select ARCH_HAVE_TESTSET
 
+# Ref: ARM Cortex-R8 TRM - GICv1 architecture, ARMv7-R profile
+config ARCH_CORTEXR8
+	bool
+	default n
+	select ARCH_ARMV7R
+	select ARCH_DCACHE
+	select ARCH_ICACHE
+	select ARCH_HAVE_MPU
+	select ARCH_HAVE_TESTSET
+
 config ARCH_CORTEXR52
 	bool
 	default n
@@ -1351,6 +1372,7 @@ config ARCH_CHIP
 	default "ht32f491x3"	if ARCH_CHIP_HT32F491X3
 	default "csk6"		if ARCH_CHIP_CSK6
 	default "mcx-nxxx"	if ARCH_CHIP_MCX_NXXX
+	default "rzv2h"		if ARCH_CHIP_RZV2H
 
 config ARM_THUMB
 	bool "Thumb Mode"
@@ -1928,5 +1950,8 @@ source "arch/arm/src/ht32f491x3/Kconfig"
 endif
 if ARCH_CHIP_MCX_NXXX
 source "arch/arm/src/mcx-nxxx/Kconfig"
+endif
+if ARCH_CHIP_RZV2H
+source "arch/arm/src/rzv2h/Kconfig"
 endif
 endif # ARCH_ARM

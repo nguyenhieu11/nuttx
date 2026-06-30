@@ -1,0 +1,40 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+if ARCH_CHIP_RZV2H
+
+# Ref: Renesas RZ/V2H datasheet - R9A09G057 part number
+comment "Renesas RZ/V2H (R9A09G057) Configuration Options"
+
+config RZV2H_SCI0
+	bool "SCI0 (UART)"
+	default y
+	select SCI0_SERIALDRIVER
+	---help---
+		# Ref: Zephyr PR #91394 r9a09g057_cr8.dtsi - sci0@12800c00
+		Enable SCI channel 0 for UART console.
+
+config RZV2H_SCI_BAUDRATE
+	int "SCI default baud rate"
+	default 115200
+	---help---
+		Default baud rate for SCI UART channels.
+
+# Ref: Zephyr PR #91394 r9a09g057_cr8.dtsi - clock-frequency = 800MHz
+config RZV2H_CR8_CLK_HZ
+	int "Cortex-R8 core clock frequency (Hz)"
+	default 800000000
+	---help---
+		The Cortex-R8 core clock frequency in Hz.
+
+# Ref: Zephyr PR #91394 r9a09g057_cr8.dtsi - timer@12c10200
+config RZV2H_HAVE_PTM
+	bool
+	default y
+	select ARMV7R_HAVE_PTM
+	---help---
+		The RZ/V2H Cortex-R8 has a Private Timer Module.
+
+endif # ARCH_CHIP_RZV2H

@@ -1,0 +1,23 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+if ARCH_BOARD_RZV2H_EVK
+
+# Ref: Renesas RZ/V2H EVK Board specifications
+config RZV2H_EVK_LEDS
+	bool "On-board LED support"
+	default y
+	depends on ARCH_LEDS
+	---help---
+		Enable support for the on-board user LEDs on the Renesas RZ/V2H EVK board.
+
+config RZV2H_EVK_BUTTONS
+	bool "On-board User Button support"
+	default n
+	depends on INPUT
+	---help---
+		Enable support for the user push buttons on the Renesas RZ/V2H EVK board.
+
+endif # ARCH_BOARD_RZV2H_EVK
